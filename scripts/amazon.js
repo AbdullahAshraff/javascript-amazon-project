@@ -61,16 +61,20 @@ document.querySelectorAll('.js-add-to-cart').forEach(button => {
         const productId = button.dataset.productId;
         let matchingItem;
 
+
+        const selectEl = button.parentElement.querySelector('select');
+        const quantityToAdd = parseInt(selectEl.value);
+
         cart.forEach(item => {
             if (productId === item.productId) matchingItem = item;
         });
 
         if (matchingItem) {
-            matchingItem.quantity += 1;
+            matchingItem.quantity += quantityToAdd;
         } else {
             cart.push({
                 productId,
-                quantity: 1,
+                quantity: quantityToAdd,
             });
         }
 
