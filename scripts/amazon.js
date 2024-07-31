@@ -1,3 +1,6 @@
+import {cart as cart} from '../data/cart.js'
+
+
 let productsHTML = '';
 
 products.forEach(product => {
@@ -58,30 +61,50 @@ document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
 document.querySelectorAll('.js-add-to-cart').forEach(button => {
     button.addEventListener('click', () => {
-        const productId = button.dataset.productId;
-        let matchingItem;
-
-
+        const {productId} = button.dataset;
+        
+        
         const selectEl = button.parentElement.querySelector('select');
         const quantityToAdd = parseInt(selectEl.value);
 
-        cart.forEach(item => {
-            if (productId === item.productId) matchingItem = item;
-        });
-
-        if (matchingItem) {
-            matchingItem.quantity += quantityToAdd;
-        } else {
-            cart.push({
-                productId,
-                quantity: quantityToAdd,
-            });
-        }
-
-        let countCartQuantity = 0;
-        cart.forEach(item => {
-            countCartQuantity += item.quantity;
-        });
-        cartQuantity = countCartQuantity;
+        addToCart(productId,quantityToAdd);
+        updateCartQuantity();
+        showAddedToCart(button);
     });
 });
+
+function addToCart(productId, quantity = 1){
+  
+  let matchingItem;
+  cart.forEach(item => {
+      if (productId === item.productId) matchingItem = item;
+  });
+
+  if (matchingItem) {
+      matchingItem.quantity += quantity;
+  } else {
+      cart.push({
+          productId,
+          quantity,
+      });
+  }
+}
+function updateCartQuantity(){
+  let countCartQuantity = 0;
+  cart.forEach(item => {
+      countCartQuantity += item.quantity;
+  });
+  // cartQuantity = countCartQuantity;
+  document.querySelector('.js-cart-quantity').textContent = countCartQuantity
+}
+function showAddedToCart(button){
+  const addedToCartEl = button.parentElement.querySelector('.added-to-cart');
+  addedToCartEl.classList.add('show-added-to-cart');
+
+  // retrieve last timeout id from the html dataset
+  let lastTimeoutId = parseInt(addedToCartEl.dataset.lastTimeoutId);
+  if (lastTimeoutId) clearTimeout(lastTimeoutId);
+  addedToCartEl.dataset.lastTimeoutId = setTimeout(()=>{
+    addedToCartEl.classList.remove('show-added-to-cart');
+  },3000);
+}
