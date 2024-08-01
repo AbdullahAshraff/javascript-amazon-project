@@ -3,6 +3,7 @@ import {
     cartQuantity,
     removeFromCart,
     setItemQuantity,
+    updateDeliveryOption,
 } from '../data/cart.js';
 import { deliveryOptions } from '../data/delivery-options.js';
 import { products } from '../data/products.js';
@@ -14,7 +15,7 @@ document.querySelectorAll('.js-delete-link').forEach(link => {
     link.addEventListener('click', () => {
         const { productId } = link.dataset;
         removeFromCart(productId);
-        removeFromHTML(productId);
+        removeItemFromHTML(productId);
     });
 });
 
@@ -108,6 +109,7 @@ function renderCartSummary() {
                 </div>
               </div>
               `;
+
         cartSummary.push(cartItemHTML);
     });
 
@@ -115,6 +117,13 @@ function renderCartSummary() {
 
     document.querySelector('.order-summary').innerHTML = cartSummary;
     updateCartQuantityHTML();
+
+    document.querySelectorAll('.js-deliver-option').forEach(option => {
+        option.addEventListener('click', () => {
+            const { productId, deliveryOptionId } = option.dataset;
+            updateDeliveryOption(productId, deliveryOptionId);
+        });
+    });
 }
 
 function renderDeliveryOptionsHTML(cartItem) {
@@ -133,7 +142,10 @@ function renderDeliveryOptionsHTML(cartItem) {
         const isChecked = cartItem.deliveryOptionId === deliveryOption.id;
 
         const optionHTML = `
-        <div class="delivery-option">
+        <div class="delivery-option js-deliver-option" data-product-id="${
+            cartItem.productId
+        }" data-delivery-option-id = ${deliveryOption.id}
+        >
           <input type="radio"
             ${isChecked ? 'checked' : ''}
             class="delivery-option-input"
@@ -157,7 +169,7 @@ function updateCartQuantityHTML() {
     document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
 }
 
-function removeFromHTML(productId) {
+function removeItemFromHTML(productId) {
     document
         .querySelector(`.cart-item-container[data-product-id="${productId}"]`)
         .remove();
