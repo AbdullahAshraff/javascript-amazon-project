@@ -16,7 +16,7 @@ export function generateOrder() {
         const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
 
         order.quantity += cartItem.quantity;
-        order.itemsCostCents += item.priceCents;
+        order.itemsCostCents += item.priceCents * cartItem.quantity;
         order.deliveryCostCents += deliveryOption.priceCents;
     });
 

@@ -1,7 +1,6 @@
 export let cart = getCartFromStorage();
 export let cartQuantity;
 getCartQuantityFromStorage();
-// export let cartQuantity = 0;
 
 export function addToCart(productId, quantityIncrement = 1) {
     let matchingItem = cart.find(item => productId === item.productId);
