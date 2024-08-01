@@ -79,6 +79,5 @@ function getCartQuantityFromStorage() {
 export function updateDeliveryOption(productId, deliveryOptionId){
     const cartItem = cart.find(item => item.productId === productId);
     cartItem.deliveryOptionId = deliveryOptionId;
-    console.log(cartItem)
     saveCartToStorage();
 }
