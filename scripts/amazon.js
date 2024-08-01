@@ -1,4 +1,4 @@
-import { cart, changeItemQuantity, cartQuantity } from '../data/cart.js';
+import { cart, addToCart, cartQuantity } from '../data/cart.js';
 import { products as products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 
@@ -11,7 +11,7 @@ document.querySelectorAll('.js-add-to-cart').forEach(button => {
         const selectEl = button.parentElement.querySelector('select');
         const quantityToAdd = parseInt(selectEl.value);
 
-        changeItemQuantity(productId, quantityToAdd);
+        addToCart(productId, quantityToAdd);
         updateCartQuantityHTML();
         showAddedToCart(button);
     });
