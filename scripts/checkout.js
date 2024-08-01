@@ -1,13 +1,27 @@
-import {cart} from '../data/cart.js'
-import { products } from '../data/products.js'
-import {formatCurrency} from './utils/money.js'
-let cartSummary = [];
-cart.forEach((cartItem)=>{
+import { cart, removeFromCart } from '../data/cart.js';
+import { products } from '../data/products.js';
+import { formatCurrency } from './utils/money.js';
 
-    const item = products.find((item)=> item.id === cartItem.productId)
+renderCartSummary();
+document.querySelectorAll('.js-delete-link').forEach(link => {
+    link.addEventListener('click', () => {
+        const { productId } = link.dataset;
+        removeFromCart(productId);
+        removeFromHTML(productId);
+    });
+});
 
-    const cartItemHTML = `
-             <div class="cart-item-container">
+function removeFromHTML(productId){
+    document.querySelector(`.cart-item-container[data-product-id="${productId}"]`).remove();
+}
+
+function renderCartSummary() {
+    let cartSummary = [];
+    cart.forEach(cartItem => {
+        const item = products.find(item => item.id === cartItem.productId);
+
+        const cartItemHTML = `
+             <div class="cart-item-container" data-product-id="${item.id}">
                 <div class="delivery-date">
                   Delivery date: Tuesday, June 21
                 </div>
@@ -25,12 +39,16 @@ cart.forEach((cartItem)=>{
                     </div>
                     <div class="product-quantity">
                       <span>
-                        Quantity: <span class="quantity-label">${cartItem.quantity}</span>
+                        Quantity: <span class="quantity-label">${
+                            cartItem.quantity
+                        }</span>
                       </span>
                       <span class="update-quantity-link link-primary">
                         Update
                       </span>
-                      <span class="delete-quantity-link link-primary">
+                      <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${
+                          item.id
+                      }">
                         Delete
                       </span>
                     </div>
@@ -82,11 +100,11 @@ cart.forEach((cartItem)=>{
                   </div>
                 </div>
               </div>
-              `
-    cartSummary.push(cartItemHTML)
+              `;
+        cartSummary.push(cartItemHTML);
+    });
 
-})
+    cartSummary = cartSummary.join('');
 
-cartSummary = cartSummary.join('');
-
-document.querySelector('.order-summary').innerHTML = cartSummary;
+    document.querySelector('.order-summary').innerHTML = cartSummary;
+}

@@ -28,3 +28,9 @@ export function addToCart(productId, quantity = 1) {
         });
     }
 }
+
+export function removeFromCart(productId) {
+    // const newCart = []
+    const idxToRemove = cart.findIndex(item => item.productId === productId);
+    cart.splice(idxToRemove, 1);
+}
