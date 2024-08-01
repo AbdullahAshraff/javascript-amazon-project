@@ -1,4 +1,9 @@
-import { cart, removeFromCart } from '../data/cart.js';
+import {
+    cart,
+    cartQuantity,
+    removeFromCart,
+    setItemQuantity,
+} from '../data/cart.js';
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 
@@ -11,17 +16,39 @@ document.querySelectorAll('.js-delete-link').forEach(link => {
     });
 });
 
-function removeFromHTML(productId){
-    document.querySelector(`.cart-item-container[data-product-id="${productId}"]`).remove();
-}
+document.querySelectorAll('.js-update-quantity-link').forEach(link => {
+    link.addEventListener('click', () => {
+        const { productId } = link.dataset;
+        const container = document.querySelector(
+            `.js-cart-item-container[data-product-id="${productId}"]`
+        );
+        container.classList.add('is-updating-quantity');
+    });
+});
+
+document.querySelectorAll('.js-save-quantity-link').forEach(link => {
+    link.addEventListener('click', () => {
+        const { productId } = link.dataset;
+        const quantityInput = document.querySelector(
+            `.js-new-quantity-input[data-product-id="${productId}"]`
+        );
+        setItemQuantity(productId, parseInt(quantityInput.value));
+        setItemQuantityHTML(productId, parseInt(quantityInput.value))
+        const container = document.querySelector(
+            `.js-cart-item-container[data-product-id="${productId}"]`
+        );
+        container.classList.remove('is-updating-quantity');
+    });
+});
 
 function renderCartSummary() {
     let cartSummary = [];
     cart.forEach(cartItem => {
         const item = products.find(item => item.id === cartItem.productId);
-
         const cartItemHTML = `
-             <div class="cart-item-container" data-product-id="${item.id}">
+             <div class="cart-item-container js-cart-item-container" data-product-id="${
+                 item.id
+             }">
                 <div class="delivery-date">
                   Delivery date: Tuesday, June 21
                 </div>
@@ -37,13 +64,23 @@ function renderCartSummary() {
                     <div class="product-price">
                       $${formatCurrency(item.priceCents)}
                     </div>
-                    <div class="product-quantity">
+                    <div class="product-quantity js-product-quantity">
                       <span>
-                        Quantity: <span class="quantity-label">${
+                        Quantity: <span class="quantity-label js-quantity-label" data-product-id="${item.id}">${
                             cartItem.quantity
                         }</span>
                       </span>
-                      <span class="update-quantity-link link-primary">
+                      <input class="js-new-quantity-input new-quantity-input" type="number" value="${
+                          cartItem.quantity
+                      }" data-product-id="${item.id}">
+                      <span class="link-primary save-quantity-link js-save-quantity-link" data-product-id="${
+                          item.id
+                      }">
+                        Save
+                      </span>
+                      <span class="update-quantity-link link-primary js-update-quantity-link" data-product-id="${
+                          item.id
+                      }">
                         Update
                       </span>
                       <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${
@@ -107,4 +144,22 @@ function renderCartSummary() {
     cartSummary = cartSummary.join('');
 
     document.querySelector('.order-summary').innerHTML = cartSummary;
+    updateCartQuantityHTML();
+}
+
+function updateCartQuantityHTML() {
+    document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+}
+
+function removeFromHTML(productId) {
+    document
+        .querySelector(`.cart-item-container[data-product-id="${productId}"]`)
+        .remove();
+    updateCartQuantityHTML();
+}
+
+function setItemQuantityHTML(productId, quantity){
+  const label = document.querySelector( `.js-quantity-label[data-product-id="${productId}"]`);
+  label.textContent = quantity;
+  updateCartQuantityHTML()
 }
