@@ -12,7 +12,7 @@ export function addToCart(productId, quantityIncrement = 1) {
         cart.push({
             productId,
             quantity: quantityIncrement,
-            deliveryOptionId:1 
+            deliveryOptionId: '1' 
         });
     }
     saveCartToStorage();
