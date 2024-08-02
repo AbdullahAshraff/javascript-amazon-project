@@ -1,8 +1,8 @@
 import { formatCurrency } from '../utils/money.js';
-import { generateOrder } from '../../data/order.js';
+import { generateOrder as generateOrderPayment } from '../../data/order.js';
 
 export default function renderPaymentSummary() {
-    const order = generateOrder()
+    const order = generateOrderPayment()
 
     const html = `
           <div class="payment-summary-title">

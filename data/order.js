@@ -2,7 +2,7 @@ import { cart } from './cart.js';
 import { getProduct } from './products.js';
 import { getDeliveryOption } from './delivery-options.js';
 
-export function generateOrder() {
+export function generateOrderPayment() {
     let order = {
         quantity: 0,
         itemsCostCents: 0,
