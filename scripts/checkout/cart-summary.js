@@ -83,7 +83,7 @@ export default function renderCartSummary() {
 
     cartSummary = cartSummary.join('');
 
-    document.querySelector('.order-summary').innerHTML = cartSummary;
+    document.querySelector('.js-order-summary').innerHTML = cartSummary;
     addLinksListeners();
 }
 
