@@ -132,6 +132,7 @@ function addLinksListeners() {
         link.addEventListener('click', () => {
             const { productId } = link.dataset;
             removeFromCart(productId);
+            renderCartSummary();
             renderCheckoutHeader();
             renderPaymentSummary();
         });

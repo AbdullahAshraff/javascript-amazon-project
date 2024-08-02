@@ -24,12 +24,15 @@ export function setItemQuantity(productId, quantity = undefined) {
     if (matchingItem) {
         matchingItem.quantity = quantity;
     }
+    else {
+        addToCart(productId, quantity);
+    }
     saveCartToStorage();
     updateCartQuantity();
 }
 export function removeFromCart(productId) {
     const idxToRemove = cart.findIndex(item => item.productId === productId);
-    cart.splice(idxToRemove, 1);
+    if (idxToRemove >= 0) cart.splice(idxToRemove, 1);
     saveCartToStorage();
     updateCartQuantity();
 }
