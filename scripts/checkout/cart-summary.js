@@ -11,7 +11,7 @@ import {
 import { getProduct } from '../../data/products.js';
 import { formatCurrency } from '../utils/money.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
-import renderPaymentSummary from './paymentSummary.js';
+import renderPaymentSummary from './payment-summary.js';
 import renderCheckoutHeader from './checkout-header.js';
 
 export default function renderCartSummary() {
@@ -19,8 +19,9 @@ export default function renderCartSummary() {
     const today = dayjs();
     cart.forEach(cartItem => {
         const item = getProduct(cartItem.productId);
-        const selectedOption = getDeliveryOption(cartItem.deliveryOptionId);
-        const deliveryDate = today.add(selectedOption.deliveryDays, 'day');
+
+        const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
+        const deliveryDate = today.add(deliveryOption.deliveryDays, 'day');
         const dateString = deliveryDate.format('dddd, MMMM D');
         const cartItemHTML = `
              <div class="cart-item-container js-cart-item-container" data-product-id="${
