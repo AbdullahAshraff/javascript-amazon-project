@@ -39,7 +39,7 @@ export default function renderCartSummary() {
                       ${item.name}
                     </div>
                     <div class="product-price">
-                      $${formatCurrency(item.priceCents)}
+                      ${item.getPrice()}
                     </div>
                     <div class="product-quantity js-product-quantity">
                       <span>

@@ -1,6 +1,5 @@
-import { cart, addToCart, cartQuantity } from '../data/cart-old.js';
-import { products as products } from '../data/products.js';
-import { formatCurrency } from './utils/money.js';
+import { addToCart, cartQuantity } from '../data/cart-old.js';
+import { products } from '../data/products.js';
 
 renderProductsHTML();
 
@@ -33,14 +32,14 @@ function renderProductsHTML() {
 
       <div class="product-rating-container">
         <img class="product-rating-stars"
-          src="images/ratings/rating-${product.rating.stars * 10}.png">
+          src="${product.getRatingImageURL()}">
         <div class="product-rating-count link-primary">
           ${product.rating.count}
         </div>
       </div>
 
       <div class="product-price">
-        $${formatCurrency(product.priceCents)}
+        ${product.getPrice()}
       </div>
 
       <div class="product-quantity-container">
@@ -60,7 +59,7 @@ function renderProductsHTML() {
 
       <div class="product-spacer"></div>
 
-      <div class="added-to-cart">
+      <div class="added-to-cart js-added-to-cart">
         <img src="images/icons/checkmark.png">
         Added
       </div>
@@ -85,7 +84,7 @@ function updateCartQuantityHTML() {
 }
 
 function showAddedToCart(button) {
-    const addedToCartEl = button.parentElement.querySelector('.added-to-cart');
+    const addedToCartEl = button.parentElement.querySelector('.js-added-to-cart');
     addedToCartEl.classList.add('show-added-to-cart');
 
     // retrieve last timeout id from the html dataset
