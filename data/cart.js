@@ -5,6 +5,10 @@ loadCartFromStorage();
 loadCartQuantityFromStorage();
 
 export function addToCart(productId, quantityIncrement = 1) {
+    if (!productId){
+        console.error('wrong value was passed to addToCart as a productId');
+        return;
+    }
     let matchingItem = cart.find(item => productId === item.productId);
 
     if (matchingItem) {
