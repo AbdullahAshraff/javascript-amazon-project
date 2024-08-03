@@ -2,7 +2,7 @@ import {
     cart,
     loadCartFromStorage,
     loadCartQuantityFromStorage,
-} from '../../data/cart.js';
+} from '../../data/cart-old.js';
 import renderCartSummary from '../../scripts/checkout/cart-summary.js';
 
 describe('test suite: renderCartSummary', () => {

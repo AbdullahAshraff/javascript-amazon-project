@@ -1,4 +1,4 @@
-import { cart } from './cart.js';
+import { cart } from './cart-old.js';
 import { getProduct } from './products.js';
 import { getDeliveryOption } from './delivery-options.js';
 

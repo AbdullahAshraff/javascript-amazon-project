@@ -1,4 +1,4 @@
-import { cartQuantity } from "../../data/cart.js";
+import { cartQuantity } from "../../data/cart-old.js";
 
 
 export default function renderCheckoutHeader(){

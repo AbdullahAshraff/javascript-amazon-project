@@ -4,7 +4,7 @@ import {
     cartQuantity,
     loadCartFromStorage,
     loadCartQuantityFromStorage,
-} from '../../data/cart.js';
+} from '../../data/cart-old.js';
 
 describe('test suite: addToCart', () => {
     it('adds a new product to cart', () => {

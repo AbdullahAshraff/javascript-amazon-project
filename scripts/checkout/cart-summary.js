@@ -3,7 +3,7 @@ import {
     removeFromCart,
     setItemQuantity,
     updateDeliveryOption,
-} from '../../data/cart.js';
+} from '../../data/cart-old.js';
 import {
     deliveryOptions,
     getDeliveryOption,
