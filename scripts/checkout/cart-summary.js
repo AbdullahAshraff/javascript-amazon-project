@@ -12,7 +12,7 @@ import formatDate from '../utils/dates.js';
 
 export default function renderCartSummary() {
     let cartSummary = [];
-    cartInstance.cartItems.forEach(cartItem => {
+    cartInstance.items.forEach(cartItem => {
         const item = getProduct(cartItem.productId);
 
         const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);

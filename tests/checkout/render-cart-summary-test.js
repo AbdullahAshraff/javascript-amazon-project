@@ -108,7 +108,7 @@ describe('test suite: renderCartSummary', () => {
             ).not.toEqual(null);
         }
 
-        expect(cartInstance.cartItems.length).toEqual(cartToTest.length - 1);
-        expect(cartInstance.cartItems).toEqual(cartToTest.slice(1));
+        expect(cartInstance.items.length).toEqual(cartToTest.length - 1);
+        expect(cartInstance.items).toEqual(cartToTest.slice(1));
     });
 });

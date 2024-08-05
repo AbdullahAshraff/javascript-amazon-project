@@ -1,6 +1,6 @@
 class Cart {
-    cartItems;
-    cartQuantity;
+    items;
+    quantity;
     #cartItemsLSKey;
     #cartQuantityLSKey;
 
@@ -15,25 +15,25 @@ class Cart {
             console.error('wrong value was passed to addToCart as a productId');
             return;
         }
-        let matchingItem = this.cartItems.find(
+        let matchingItem = this.items.find(
             item => productId === item.productId
         );
 
         if (matchingItem) {
             matchingItem.quantity += quantityIncrement;
         } else {
-            this.cartItems.push({
+            this.items.push({
                 productId,
                 quantity: quantityIncrement,
                 deliveryOptionId: '1',
             });
         }
-        this.#saveCartToStorage();
-        this.#calcCartQuantity();
+        this.#saveItemsToStorage();
+        this.#calcQuantity();
     }
 
     setItemQuantity(productId, quantity = undefined) {
-        let matchingItem = this.cartItems.find(
+        let matchingItem = this.items.find(
             item => productId === item.productId
         );
 
@@ -42,44 +42,44 @@ class Cart {
         } else {
             this.addToCart(productId, quantity);
         }
-        this.#saveCartToStorage();
-        this.#calcCartQuantity();
+        this.#saveItemsToStorage();
+        this.#calcQuantity();
     }
 
     removeFromCart(productId) {
-        const idxToRemove = this.cartItems.findIndex(
+        const idxToRemove = this.items.findIndex(
             item => item.productId === productId
         );
-        if (idxToRemove >= 0) this.cartItems.splice(idxToRemove, 1);
-        this.#saveCartToStorage();
-        this.#calcCartQuantity();
+        if (idxToRemove >= 0) this.items.splice(idxToRemove, 1);
+        this.#saveItemsToStorage();
+        this.#calcQuantity();
     }
 
     updateDeliveryOption(productId, deliveryOptionId) {
-        const cartItem = this.cartItems.find(
+        const cartItem = this.items.find(
             item => item.productId === productId
         );
         cartItem.deliveryOptionId = deliveryOptionId;
-        this.#saveCartToStorage();
+        this.#saveItemsToStorage();
     }
 
     loadFromStorage() {
-        this.#loadCartFromStorage();
-        this.#loadCartQuantityFromStorage();
+        this.#loadItemsFromStorage();
+        this.#loadQuantityFromStorage();
     }
 
-    #saveCartToStorage() {
+    #saveItemsToStorage() {
         localStorage.setItem(
             this.#cartItemsLSKey,
-            JSON.stringify(this.cartItems)
+            JSON.stringify(this.items)
         );
     }
 
-    #loadCartFromStorage() {
-        this.cartItems = localStorage.getItem(this.#cartItemsLSKey);
-        if (this.cartItems) this.cartItems = JSON.parse(this.cartItems);
+    #loadItemsFromStorage() {
+        this.items = localStorage.getItem(this.#cartItemsLSKey);
+        if (this.items) this.items = JSON.parse(this.items);
         else {
-            this.cartItems = [
+            this.items = [
                 {
                     productId: '54e0eccd-8f36-462b-b68a-8182611d9add',
                     quantity: 2,
@@ -109,21 +109,21 @@ class Cart {
         }
     }
 
-    #calcCartQuantity() {
+    #calcQuantity() {
         let countCartQuantity = 0;
-        this.cartItems.forEach(item => {
+        this.items.forEach(item => {
             countCartQuantity += item.quantity;
         });
-        this.cartQuantity = countCartQuantity;
-        localStorage.setItem(this.#cartQuantityLSKey, this.cartQuantity);
+        this.quantity = countCartQuantity;
+        localStorage.setItem(this.#cartQuantityLSKey, this.quantity);
     }
 
-    #loadCartQuantityFromStorage() {
-        this.cartQuantity = parseInt(
+    #loadQuantityFromStorage() {
+        this.quantity = parseInt(
             localStorage.getItem(this.#cartQuantityLSKey)
         );
-        if (!this.cartQuantity) {
-            this.#calcCartQuantity();
+        if (!this.quantity) {
+            this.#calcQuantity();
         }
     }
 }

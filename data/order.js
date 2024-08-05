@@ -11,7 +11,7 @@ export function generateOrderPayment() {
         tax: 0,
         totalAfterTax: 0,
     };
-    cartInstance.cartItems.forEach(cartItem => {
+    cartInstance.items.forEach(cartItem => {
         const item = getProduct(cartItem.productId);
         const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
 

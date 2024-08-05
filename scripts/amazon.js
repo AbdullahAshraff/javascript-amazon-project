@@ -81,7 +81,7 @@ function renderProductsHTML() {
 
 function updateCartQuantityHTML() {
     document.querySelector('.js-cart-quantity').textContent =
-        cartInstance.cartQuantity;
+        cartInstance.quantity;
 }
 
 function showAddedToCart(button) {
