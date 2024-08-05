@@ -21,8 +21,29 @@ class Product {
         return `$${formatCurrency(this.priceCents)}`;
     }
 
-    getRatingImageURL(){
-        return `images/ratings/rating-${this.rating.stars * 10}.png`
+    getRatingImageURL() {
+        return `images/ratings/rating-${this.rating.stars * 10}.png`;
+    }
+
+    extraInfoHTML() {
+        return ``;
+    }
+}
+
+class Colthing extends Product {
+    sizeChartLink;
+
+    constructor(productDetails) {
+        super(productDetails);
+        this.sizeChartLink = productDetails.sizeChartLink;
+    }
+
+    extraInfoHTML() {
+        return `
+            <a href="${this.sizeChartLink}" target="_blank">
+                size chart
+            </a>
+        `;
     }
 }
 
@@ -505,6 +526,9 @@ export const products = [
         keywords: ['sweaters', 'hoodies', 'apparel', 'mens'],
     },
 ].map(productDetails => {
+    if (productDetails.type === 'clothing') {
+        return new Colthing(productDetails);
+    }
     return new Product(productDetails);
 });
 
