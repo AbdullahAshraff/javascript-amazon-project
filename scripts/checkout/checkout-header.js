@@ -1,4 +1,4 @@
-import cartInstance from '../../data/cart-class.js';
+import cart from '../../data/cart.js';
 
 export default function renderCheckoutHeader() {
     document.querySelector('.js-checkout-header').innerHTML = `
@@ -13,7 +13,7 @@ export default function renderCheckoutHeader() {
 
         <div class="checkout-header-middle-section">
           Checkout (<a class="return-to-home-link"
-            href="amazon.html">${cartInstance.quantity} items</a>)
+            href="amazon.html">${cart.quantity} items</a>)
         </div>
 
         <div class="checkout-header-right-section">

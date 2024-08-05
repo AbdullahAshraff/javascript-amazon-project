@@ -1,4 +1,4 @@
-import cartInstance from './cart-class.js';
+import cart from './cart.js';
 import { getProduct } from './products.js';
 import { getDeliveryOption } from './delivery-options.js';
 
@@ -11,7 +11,7 @@ export function generateOrderPayment() {
         tax: 0,
         totalAfterTax: 0,
     };
-    cartInstance.items.forEach(cartItem => {
+    cart.items.forEach(cartItem => {
         const item = getProduct(cartItem.productId);
         const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
 

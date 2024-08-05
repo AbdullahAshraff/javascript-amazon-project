@@ -1,4 +1,4 @@
-import cartInstance from '../../data/cart-class.js';
+import cart from '../../data/cart.js';
 
 import {
     deliveryOptions,
@@ -12,7 +12,7 @@ import formatDate from '../utils/dates.js';
 
 export default function renderCartSummary() {
     let cartSummary = [];
-    cartInstance.items.forEach(cartItem => {
+    cart.items.forEach(cartItem => {
         const item = getProduct(cartItem.productId);
 
         const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
@@ -125,7 +125,7 @@ function addLinksListeners() {
     document.querySelectorAll('.js-delete-link').forEach(link => {
         link.addEventListener('click', () => {
             const { productId } = link.dataset;
-            cartInstance.removeFromCart(productId);
+            cart.removeFromCart(productId);
             renderCartSummary();
             renderCheckoutHeader();
             renderPaymentSummary();
@@ -150,7 +150,7 @@ function addLinksListeners() {
             const quantityInput = document.querySelector(
                 `.js-new-quantity-input[data-product-id="${productId}"]`
             );
-            cartInstance.setItemQuantity(
+            cart.setItemQuantity(
                 productId,
                 parseInt(quantityInput.value)
             );
@@ -168,7 +168,7 @@ function addLinksListeners() {
     document.querySelectorAll('.js-deliver-option').forEach(option => {
         option.addEventListener('click', () => {
             const { productId, deliveryOptionId } = option.dataset;
-            cartInstance.updateDeliveryOption(productId, deliveryOptionId);
+            cart.updateDeliveryOption(productId, deliveryOptionId);
             renderCartSummary();
             renderPaymentSummary();
         });

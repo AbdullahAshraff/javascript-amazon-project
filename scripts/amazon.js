@@ -1,4 +1,4 @@
-import cartInstance from '../data/cart-class.js';
+import cart from '../data/cart.js';
 import { products } from '../data/products.js';
 
 renderProductsHTML();
@@ -10,7 +10,7 @@ document.querySelectorAll('.js-add-to-cart').forEach(button => {
         const selectEl = button.parentElement.querySelector('select');
         const quantityToAdd = parseInt(selectEl.value);
 
-        cartInstance.addToCart(productId, quantityToAdd);
+        cart.addToCart(productId, quantityToAdd);
         updateCartQuantityHTML();
         showAddedToCart(button);
     });
@@ -81,7 +81,7 @@ function renderProductsHTML() {
 
 function updateCartQuantityHTML() {
     document.querySelector('.js-cart-quantity').textContent =
-        cartInstance.quantity;
+        cart.quantity;
 }
 
 function showAddedToCart(button) {

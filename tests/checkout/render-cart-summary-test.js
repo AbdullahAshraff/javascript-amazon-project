@@ -1,4 +1,4 @@
-import cartInstance from '../../data/cart-class.js';
+import cart from '../../data/cart.js';
 import { getProduct } from '../../data/products.js';
 import renderCartSummary from '../../scripts/checkout/cart-summary.js';
 
@@ -41,7 +41,7 @@ describe('test suite: renderCartSummary', () => {
         spyOn(localStorage, 'getItem').and.callFake(() => {
             return JSON.stringify(cartToTest);
         });
-        cartInstance.loadFromStorage();
+        cart.loadFromStorage();
 
         renderCartSummary();
     });
@@ -108,7 +108,7 @@ describe('test suite: renderCartSummary', () => {
             ).not.toEqual(null);
         }
 
-        expect(cartInstance.items.length).toEqual(cartToTest.length - 1);
-        expect(cartInstance.items).toEqual(cartToTest.slice(1));
+        expect(cart.items.length).toEqual(cartToTest.length - 1);
+        expect(cart.items).toEqual(cartToTest.slice(1));
     });
 });
