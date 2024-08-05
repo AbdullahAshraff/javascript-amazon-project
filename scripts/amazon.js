@@ -1,4 +1,4 @@
-import { addToCart, cartQuantity } from '../data/cart-old.js';
+import cartInstance from '../data/cart-class.js';
 import { products } from '../data/products.js';
 
 renderProductsHTML();
@@ -10,7 +10,7 @@ document.querySelectorAll('.js-add-to-cart').forEach(button => {
         const selectEl = button.parentElement.querySelector('select');
         const quantityToAdd = parseInt(selectEl.value);
 
-        addToCart(productId, quantityToAdd);
+        cartInstance.addToCart(productId, quantityToAdd);
         updateCartQuantityHTML();
         showAddedToCart(button);
     });
@@ -80,11 +80,13 @@ function renderProductsHTML() {
 }
 
 function updateCartQuantityHTML() {
-    document.querySelector('.js-cart-quantity').textContent = cartQuantity;
+    document.querySelector('.js-cart-quantity').textContent =
+        cartInstance.cartQuantity;
 }
 
 function showAddedToCart(button) {
-    const addedToCartEl = button.parentElement.querySelector('.js-added-to-cart');
+    const addedToCartEl =
+        button.parentElement.querySelector('.js-added-to-cart');
     addedToCartEl.classList.add('show-added-to-cart');
 
     // retrieve last timeout id from the html dataset

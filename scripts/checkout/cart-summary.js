@@ -1,22 +1,18 @@
-import {
-    cart,
-    removeFromCart,
-    setItemQuantity,
-    updateDeliveryOption,
-} from '../../data/cart-old.js';
+import cartInstance from '../../data/cart-class.js';
+
 import {
     deliveryOptions,
     getDeliveryOption,
 } from '../../data/delivery-options.js';
 import { getProduct } from '../../data/products.js';
-import { formatCurrency } from '../utils/money.js'; 
+import { formatCurrency } from '../utils/money.js';
 import renderPaymentSummary from './payment-summary.js';
 import renderCheckoutHeader from './checkout-header.js';
 import formatDate from '../utils/dates.js';
 
 export default function renderCartSummary() {
     let cartSummary = [];
-    cart.forEach(cartItem => {
+    cartInstance.cartItems.forEach(cartItem => {
         const item = getProduct(cartItem.productId);
 
         const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
@@ -91,7 +87,7 @@ function renderDeliveryOptionsHTML(cartItem) {
     let html = [];
 
     deliveryOptions.forEach(deliveryOption => {
-        const dateString = formatDate(deliveryOption)
+        const dateString = formatDate(deliveryOption);
 
         const priceString =
             deliveryOption.priceCents === 0
@@ -129,7 +125,7 @@ function addLinksListeners() {
     document.querySelectorAll('.js-delete-link').forEach(link => {
         link.addEventListener('click', () => {
             const { productId } = link.dataset;
-            removeFromCart(productId);
+            cartInstance.removeFromCart(productId);
             renderCartSummary();
             renderCheckoutHeader();
             renderPaymentSummary();
@@ -154,7 +150,10 @@ function addLinksListeners() {
             const quantityInput = document.querySelector(
                 `.js-new-quantity-input[data-product-id="${productId}"]`
             );
-            setItemQuantity(productId, parseInt(quantityInput.value));
+            cartInstance.setItemQuantity(
+                productId,
+                parseInt(quantityInput.value)
+            );
             const container = document.querySelector(
                 `.js-cart-item-container[data-product-id="${productId}"]`
             );
@@ -169,7 +168,7 @@ function addLinksListeners() {
     document.querySelectorAll('.js-deliver-option').forEach(option => {
         option.addEventListener('click', () => {
             const { productId, deliveryOptionId } = option.dataset;
-            updateDeliveryOption(productId, deliveryOptionId);
+            cartInstance.updateDeliveryOption(productId, deliveryOptionId);
             renderCartSummary();
             renderPaymentSummary();
         });

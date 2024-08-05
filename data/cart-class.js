@@ -3,6 +3,7 @@ class Cart {
     cartQuantity;
     #cartItemsLSKey;
     #cartQuantityLSKey;
+
     constructor(cartItemsLSKey, cartQuantityLSKey) {
         this.#cartItemsLSKey = cartItemsLSKey;
         this.#cartQuantityLSKey = cartQuantityLSKey;
@@ -62,7 +63,7 @@ class Cart {
         this.#saveCartToStorage();
     }
 
-    loadFromStorage(){
+    loadFromStorage() {
         this.#loadCartFromStorage();
         this.#loadCartQuantityFromStorage();
     }
@@ -104,7 +105,7 @@ class Cart {
                     quantity: 1,
                     deliveryOptionId: '1',
                 },
-            ];;
+            ];
         }
     }
 
@@ -125,8 +126,10 @@ class Cart {
             this.#calcCartQuantity();
         }
     }
-
 }
+
+const cart = new Cart('cartClass', 'cartQuantityClass');
+export default cart;
 
 /*
 const normalCart = new Cart('normal-cart-class', 'normal-cartQuantity-class');
