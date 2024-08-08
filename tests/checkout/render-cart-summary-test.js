@@ -1,5 +1,5 @@
 import cart from '../../data/cart.js';
-import { getProduct } from '../../data/products.js';
+import { getProduct, loadProducts } from '../../data/products.js';
 import renderCartSummary from '../../scripts/checkout/cart-summary.js';
 
 describe('test suite: renderCartSummary', () => {
@@ -31,6 +31,9 @@ describe('test suite: renderCartSummary', () => {
         },
     ];
 
+    beforeAll((done)=>{
+        loadProducts(done);
+    })
     beforeEach(() => {
         spyOn(localStorage, 'setItem');
         document.querySelector('.js-tests-container').innerHTML = ` 
