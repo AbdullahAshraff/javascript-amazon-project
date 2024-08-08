@@ -1,27 +1,30 @@
 import cart from '../data/cart.js';
-import { products } from '../data/products.js';
+import { products, loadProducts } from '../data/products.js';
 import { renderHeaderHTML } from './amazon-header.js';
 
-renderHeaderHTML();
-renderProductsHTML();
+loadProducts(main);
 
-document.querySelectorAll('.js-add-to-cart').forEach(button => {
-    button.addEventListener('click', () => {
-        const { productId } = button.dataset;
+function main() {
+    renderHeaderHTML();
+    renderProductsHTML();
 
-        const selectEl = button.parentElement.querySelector('select');
-        const quantityToAdd = parseInt(selectEl.value);
+    document.querySelectorAll('.js-add-to-cart').forEach(button => {
+        button.addEventListener('click', () => {
+            const { productId } = button.dataset;
 
-        cart.addToCart(productId, quantityToAdd);
-        renderHeaderHTML();
-        showAddedToCart(button);
+            const selectEl = button.parentElement.querySelector('select');
+            const quantityToAdd = parseInt(selectEl.value);
+
+            cart.addToCart(productId, quantityToAdd);
+            renderHeaderHTML();
+            showAddedToCart(button);
+        });
     });
-});
 
-function renderProductsHTML() {
-    let productsHTML = [];
-    products.forEach(product => {
-        const singleProductHTML = `
+    function renderProductsHTML() {
+        let productsHTML = [];
+        products.forEach(product => {
+            const singleProductHTML = `
     <div class="product-container">
       <div class="product-image-container">
         <img class="product-image"
@@ -74,22 +77,23 @@ function renderProductsHTML() {
       </button>
     </div>
   `;
-        productsHTML.push(singleProductHTML);
-    });
-    productsHTML = productsHTML.join('');
+            productsHTML.push(singleProductHTML);
+        });
+        productsHTML = productsHTML.join('');
 
-    document.querySelector('.js-products-grid').innerHTML = productsHTML;
-}
+        document.querySelector('.js-products-grid').innerHTML = productsHTML;
+    }
 
-function showAddedToCart(button) {
-    const addedToCartEl =
-        button.parentElement.querySelector('.js-added-to-cart');
-    addedToCartEl.classList.add('show-added-to-cart');
+    function showAddedToCart(button) {
+        const addedToCartEl =
+            button.parentElement.querySelector('.js-added-to-cart');
+        addedToCartEl.classList.add('show-added-to-cart');
 
-    // retrieve last timeout id from the html dataset
-    let lastTimeoutId = parseInt(addedToCartEl.dataset.lastTimeoutId);
-    if (lastTimeoutId) clearTimeout(lastTimeoutId);
-    addedToCartEl.dataset.lastTimeoutId = setTimeout(() => {
-        addedToCartEl.classList.remove('show-added-to-cart');
-    }, 3000);
+        // retrieve last timeout id from the html dataset
+        let lastTimeoutId = parseInt(addedToCartEl.dataset.lastTimeoutId);
+        if (lastTimeoutId) clearTimeout(lastTimeoutId);
+        addedToCartEl.dataset.lastTimeoutId = setTimeout(() => {
+            addedToCartEl.classList.remove('show-added-to-cart');
+        }, 3000);
+    }
 }
