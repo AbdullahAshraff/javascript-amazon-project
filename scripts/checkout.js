@@ -7,8 +7,10 @@ import { loadCartFetch } from '../data/cart.js';
 
 loadPage();
 async function loadPage(){
-    await loadProductsFetch();
-    await loadCartFetch();
+    await Promise.all([
+        loadProductsFetch(),
+        loadCartFetch(),
+    ]);
     renderCheckoutHeader();
     renderCartSummary();
     renderPaymentSummary(); 
