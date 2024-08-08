@@ -5,14 +5,32 @@ import { loadProducts } from '../data/products.js';
 import { loadCart } from '../data/cart.js';
 // import '../data/car.js';
 
+Promise.all([
+    new Promise(resolve => {
+        loadProducts(() => {
+            resolve();
+        });
+    }),
+    new Promise(resolve => {
+        loadCart(() => {
+            resolve();
+        });
+    }),
+]).then(() => {
+    renderCheckoutHeader();
+    renderCartSummary();
+    renderPaymentSummary();
+});
+
+/*
 new Promise(resolve => {
-    loadProducts(()=>{
+    loadProducts(() => {
         resolve();
     });
 })
     .then(() => {
         return new Promise(resolve => {
-            loadCart(()=>{
+            loadCart(() => {
                 resolve();
             });
         });
@@ -22,6 +40,7 @@ new Promise(resolve => {
         renderCartSummary();
         renderPaymentSummary();
     });
+*/
 /*
 loadProducts(main);
 function main() {
