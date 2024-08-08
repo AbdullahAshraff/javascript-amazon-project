@@ -2,15 +2,17 @@ import cart from './cart.js';
 import { getProduct } from './products.js';
 import { getDeliveryOption } from './delivery-options.js';
 
+class OrderPayment {
+    quantity = 0;
+    itemsCostCents = 0;
+    deliveryCostCents = 0;
+    totalBeforeTax = 0;
+    tax = 0;
+    totalAfterTax = 0;
+}
+
 export function generateOrderPayment() {
-    let order = {
-        quantity: 0,
-        itemsCostCents: 0,
-        deliveryCostCents: 0,
-        totalBeforeTax: 0,
-        tax: 0,
-        totalAfterTax: 0,
-    };
+    let order = new OrderPayment()
     cart.items.forEach(cartItem => {
         const item = getProduct(cartItem.productId);
         const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
