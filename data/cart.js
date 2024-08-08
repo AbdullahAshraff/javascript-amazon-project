@@ -123,7 +123,14 @@ class Cart {
 const cart = new Cart('cartClass', 'cartQuantityClass');
 export default cart;
 
-export function loadCartFetch() {
+export async function loadCartFetch() {
+    const res = await fetch('https://supersimplebackend.dev/cart');
+    const cartData = await res.text();
+    console.log(cartData + ' :::using fetch');
+}
+
+/*
+export async function loadCartFetch() {
     const promise = fetch('https://supersimplebackend.dev/cart')
         .then(res => {
             return res.text();
@@ -133,6 +140,8 @@ export function loadCartFetch() {
         });
     return promise;
 }
+*/
+
 /*
 export function loadCart(fun) {
     const xhr = new XMLHttpRequest();

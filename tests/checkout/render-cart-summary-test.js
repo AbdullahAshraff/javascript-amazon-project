@@ -31,11 +31,16 @@ describe('test suite: renderCartSummary', () => {
         },
     ];
 
+    beforeAll(async () => {
+        await loadProductsFetch();
+    });
+    /*
     beforeAll((done)=>{
         loadProductsFetch().then(()=>{
             done();
         });
     })
+    */
     beforeEach(() => {
         spyOn(localStorage, 'setItem');
         document.querySelector('.js-tests-container').innerHTML = ` 

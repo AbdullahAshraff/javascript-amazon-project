@@ -47,8 +47,26 @@ class Colthing extends Product {
     }
 }
 
+export function getProduct(productId) {
+    return products.find(item => productId === item.id);
+}
+
 export let products = [];
 
+export async function loadProductsFetch() {
+    const response = await fetch('https://supersimplebackend.dev/products');
+    const productsData = await response.json();
+    products = productsData.map(productDetails => {
+        if (productDetails.type === 'clothing') {
+            return new Colthing(productDetails);
+        }
+        return new Product(productDetails);
+    });
+
+    console.log('products loaded using Fetch');
+}
+
+/*
 export function loadProductsFetch() {
     const promise = fetch('https://supersimplebackend.dev/products')
         .then(response => {
@@ -64,9 +82,8 @@ export function loadProductsFetch() {
 
             console.log('products loaded using Fetch');
         });
-    return promise;
 }
-
+*/
 /*
 export function loadProducts(fun) {
     const xhr = new XMLHttpRequest();
@@ -577,6 +594,3 @@ export const products = [
 });
 */
 
-export function getProduct(productId) {
-    return products.find(item => productId === item.id);
-}
