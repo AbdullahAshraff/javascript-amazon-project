@@ -54,8 +54,15 @@ export function getProduct(productId) {
 export let products = [];
 
 export async function loadProductsFetch() {
-    const response = await fetch('https://supersimplebackend.dev/products');
-    const productsData = await response.json();
+    let productsData;
+    try {
+        // throw 'errorr numbbbber 3';
+        const response = await fetch('https://supersimplebackend.dev/products');
+        productsData = await response.json();
+    } catch (error) {
+        console.log('there is a problem try again later!');
+        return;
+    }
     products = productsData.map(productDetails => {
         if (productDetails.type === 'clothing') {
             return new Colthing(productDetails);
@@ -593,4 +600,3 @@ export const products = [
     return new Product(productDetails);
 });
 */
-

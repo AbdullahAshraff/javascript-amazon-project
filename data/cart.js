@@ -150,6 +150,9 @@ export function loadCart(fun) {
         console.log(xhr.response);
         fun();
     });
+    xhr.addEventListener('error',(error)=>{
+        console.log('eeeeeeeerrrrrrrrrroooooooorrrrr')
+    })
 
     xhr.open('GET', 'https://supersimplebackend.dev/cart');
     xhr.send();
