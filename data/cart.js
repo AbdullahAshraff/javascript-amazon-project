@@ -56,9 +56,7 @@ class Cart {
     }
 
     updateDeliveryOption(productId, deliveryOptionId) {
-        const cartItem = this.items.find(
-            item => item.productId === productId
-        );
+        const cartItem = this.items.find(item => item.productId === productId);
         cartItem.deliveryOptionId = deliveryOptionId;
         this.#saveItemsToStorage();
     }
@@ -69,10 +67,7 @@ class Cart {
     }
 
     #saveItemsToStorage() {
-        localStorage.setItem(
-            this.#cartItemsLSKey,
-            JSON.stringify(this.items)
-        );
+        localStorage.setItem(this.#cartItemsLSKey, JSON.stringify(this.items));
     }
 
     #loadItemsFromStorage() {
@@ -119,30 +114,38 @@ class Cart {
     }
 
     #loadQuantityFromStorage() {
-        this.quantity = parseInt(
-            localStorage.getItem(this.#cartQuantityLSKey)
-        );
+        this.quantity = parseInt(localStorage.getItem(this.#cartQuantityLSKey));
         if (!this.quantity) {
             this.#calcQuantity();
         }
     }
 }
+const cart = new Cart('cartClass', 'cartQuantityClass');
+export default cart;
 
+export function loadCartFetch() {
+    const promise = fetch('https://supersimplebackend.dev/cart')
+        .then(res => {
+            return res.text();
+        })
+        .then(cartData => {
+            console.log(cartData + ' :::using fetch');
+        });
+    return promise;
+}
+/*
 export function loadCart(fun) {
     const xhr = new XMLHttpRequest();
 
     xhr.addEventListener('load', () => {
-        console.log(xhr.response)
+        console.log(xhr.response);
         fun();
     });
 
     xhr.open('GET', 'https://supersimplebackend.dev/cart');
     xhr.send();
 }
-
-
-const cart = new Cart('cartClass', 'cartQuantityClass');
-export default cart;
+*/
 
 /*
 const normalCart = new Cart('normal-cart-class', 'normal-cartQuantity-class');
