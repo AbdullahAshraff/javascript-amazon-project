@@ -60,6 +60,7 @@ export function loadProducts(fun) {
             return new Product(productDetails);
         });
 
+        console.log('products loaded');
         fun();
     });
 
@@ -67,7 +68,7 @@ export function loadProducts(fun) {
     xhr.send();
 }
 
-loadProducts(_=>{});
+// loadProducts(_=>{});
 
 /*
 export const products = [
