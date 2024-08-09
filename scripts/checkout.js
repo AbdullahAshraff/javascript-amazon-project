@@ -3,9 +3,9 @@ import renderCartSummary from './checkout/cart-summary.js';
 import renderPaymentSummary from './checkout/payment-summary.js';
 import { loadProductsFetch } from '../data/products.js';
 import { loadCartFetch } from '../data/cart.js';
-// import '../data/car.js';
 
 loadPage();
+
 async function loadPage(){
     await Promise.all([
         loadProductsFetch(),
@@ -15,6 +15,9 @@ async function loadPage(){
     renderCartSummary();
     renderPaymentSummary(); 
 }
+
+
+
 
 /*
 Promise.all([

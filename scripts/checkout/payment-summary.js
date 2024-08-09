@@ -1,8 +1,10 @@
 import { formatCurrency } from '../utils/money.js';
-import { generateOrderPayment } from '../../data/order.js';
+import { generateOrderPayment } from '../../data/orderPayment.js';
+import cart from '../../data/cart.js';
+import { addOrder } from '../../data/orders.js';
 
 export default function renderPaymentSummary() {
-    const order = generateOrderPayment()
+    const order = generateOrderPayment();
 
     const html = `
           <div class="payment-summary-title">
@@ -44,10 +46,34 @@ export default function renderPaymentSummary() {
             )}</div>
           </div>
 
-          <button class="place-order-button button-primary">
+          <button class="place-order-button button-primary js-place-order-button">
             Place your order
           </button>
     `;
 
     document.querySelector('.js-payment-summary').innerHTML = html;
+
+    document
+        .querySelector('.js-place-order-button')
+        .addEventListener('click', async () => {
+          try{
+            const response = await fetch(
+                'https://supersimplebackend.dev/orders',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        cart: cart.items,
+                    }),
+                }
+            );
+            
+            addOrder( await response.json());
+            window.location.href = 'orders.html';
+          } catch (error){
+            console.error('Something wrong happened. Order has not been sent! Check your connection and try again.')
+          }
+        });
 }
