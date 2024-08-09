@@ -71,6 +71,7 @@ export default function renderPaymentSummary() {
             );
             
             addOrder( await response.json());
+            cart.clear();
             window.location.href = 'orders.html';
           } catch (error){
             console.error('Something wrong happened. Order has not been sent! Check your connection and try again.')

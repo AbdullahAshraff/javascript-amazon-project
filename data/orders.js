@@ -1,5 +1,5 @@
-export let orders = [];
-loadOrdersFromStorage();
+import { formatCurrency } from "../scripts/utils/money.js";
+
 class Order{
     id;
     orderTime;
@@ -11,6 +11,10 @@ class Order{
         this.orderTime = orderDetails.orderTime;
         this.totalCostCents = orderDetails.totalCostCents;
         this.products = orderDetails.products;
+    }
+
+    getPrice() {
+        return `$${formatCurrency(this.totalCostCents)}`;
     }
 }
 
@@ -28,5 +32,8 @@ function saveToLocalStorage(){
 }
 
 function loadOrdersFromStorage(){
-    orders = JSON.parse(localStorage.getItem('orders')) || [];
+    const ordersData = JSON.parse(localStorage.getItem('orders')) || [];
+    orders = ordersData.map(orderDetails => new Order(orderDetails));
 }
+export let orders = [];
+loadOrdersFromStorage();

@@ -1,5 +1,5 @@
 import cart from '../data/cart.js';
-import { products, loadProducts, loadProductsFetch } from '../data/products.js';
+import { products, loadProductsFetch } from '../data/products.js';
 import { renderHeaderHTML } from './amazon-header.js';
 
 loadProductsFetch().then(main);

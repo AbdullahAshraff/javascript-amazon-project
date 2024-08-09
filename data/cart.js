@@ -66,6 +66,11 @@ class Cart {
         this.#loadQuantityFromStorage();
     }
 
+    clear(){
+        this.items = [];
+        this.#saveItemsToStorage();
+        this.#calcQuantity();
+    }
     #saveItemsToStorage() {
         localStorage.setItem(this.#cartItemsLSKey, JSON.stringify(this.items));
     }
