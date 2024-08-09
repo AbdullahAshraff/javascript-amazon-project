@@ -47,6 +47,12 @@ export function renderOrderGridHTML() {
             showAdded(button);
         });
     });
+    
+    document.querySelectorAll('.js-track-package-button').forEach(button=>{
+      button.addEventListener('click',()=>{
+        window.location.href = `tracking.html?productId=${button.dataset.productId}&orderId=${button.dataset.orderId}`
+      })
+    });
 }
 
 function getOrderDetailsHTML(order) {
@@ -79,11 +85,11 @@ function getOrderDetailsHTML(order) {
             </div>
 
             <div class="product-actions">
-                <a href="tracking.html">
-                <button class="track-package-button button-secondary">
+                <button class="track-package-button button-secondary js-track-package-button" data-product-id="${
+                    product.id
+                }" data-order-id= "${order.id}">
                     Track package
                 </button>
-                </a>
             </div>
         `;
         productsHTML.push(singleProductHTML);
@@ -93,12 +99,12 @@ function getOrderDetailsHTML(order) {
 }
 
 function showAdded(button) {
-  button.classList.add('show-added');
+    button.classList.add('show-added');
 
     // retrieve last timeout id from the html dataset
     let lastTimeoutId = parseInt(button.dataset.lastTimeoutId);
     if (lastTimeoutId) clearTimeout(lastTimeoutId);
     button.dataset.lastTimeoutId = setTimeout(() => {
-      button.classList.remove('show-added');
+        button.classList.remove('show-added');
     }, 2000);
 }

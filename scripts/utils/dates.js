@@ -30,6 +30,9 @@ export function calcDeliveryDateWithWeekend(deliveryOption) {
 }
 
 export function formatDate(date){
-    const dateString = dayjs(date).format('MMMM D');
-    return dateString;
+    return dayjs(date).format('MMMM D');
+}
+
+export function formatDateWithDay(date){
+    return dayjs(date).format('dddd, MMMM D');
 }
