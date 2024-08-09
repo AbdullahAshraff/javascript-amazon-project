@@ -8,7 +8,7 @@ import { getProduct } from '../../data/products.js';
 import { formatCurrency } from '../utils/money.js';
 import renderPaymentSummary from './payment-summary.js';
 import renderCheckoutHeader from './checkout-header.js';
-import formatDate from '../utils/dates.js';
+import getDeliveryDate from '../utils/dates.js';
 
 export default function renderCartSummary() {
     let cartSummary = [];
@@ -16,7 +16,7 @@ export default function renderCartSummary() {
         const item = getProduct(cartItem.productId);
 
         const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
-        const dateString = formatDate(deliveryOption);
+        const dateString = getDeliveryDate(deliveryOption);
 
         const cartItemHTML = `
              <div class="cart-item-container js-cart-item-container" data-product-id="${
@@ -87,7 +87,7 @@ function renderDeliveryOptionsHTML(cartItem) {
     let html = [];
 
     deliveryOptions.forEach(deliveryOption => {
-        const dateString = formatDate(deliveryOption);
+        const dateString = getDeliveryDate(deliveryOption);
 
         const priceString =
             deliveryOption.priceCents === 0

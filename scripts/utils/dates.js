@@ -1,7 +1,7 @@
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 
-export default function formatDate(deliveryOption) {
-    const deliveryDate = calcDeliveryDateWithWeekend(deliveryOption);
+export default function getDeliveryDate(deliveryOption) {
+    const deliveryDate = calcDeliveryDate(deliveryOption);
     const dateString = deliveryDate.format('dddd, MMMM D');
     return dateString;
 }
@@ -27,4 +27,9 @@ export function calcDeliveryDateWithWeekend(deliveryOption) {
         date = nextDate;
     }
     return date;
+}
+
+export function formatDate(date){
+    const dateString = dayjs(date).format('MMMM D');
+    return dateString;
 }

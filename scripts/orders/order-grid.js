@@ -1,6 +1,8 @@
-import { orders } from "../../data/orders.js";
+import { orders } from '../../data/orders.js';
+import { getProduct } from '../../data/products.js';
+import { formatDate } from '../utils/dates.js';
 
-export function renderOrderGridHTML(){
+export function renderOrderGridHTML() {
     let html = [];
 
     orders.forEach(order => {
@@ -12,7 +14,7 @@ export function renderOrderGridHTML(){
             <div class="order-header-left-section">
               <div class="order-date">
                 <div class="order-header-label">Order Placed:</div>
-                <div>June 10</div>
+                <div>${formatDate(order.orderTime)}</div>
               </div>
               <div class="order-total">
                 <div class="order-header-label">Total:</div>
@@ -25,40 +27,53 @@ export function renderOrderGridHTML(){
               <div>${order.id}</div>
             </div>
           </div>
-
           <div class="order-details-grid">
+              ${getOrderDetailsHTML(order)}
+          </div>
+        </div>
+        `;
+        html.push(orderContainerHTML);
+    });
+    html = html.join('');
+    document.querySelector('.js-orders-grid').innerHTML = html;
+}
+
+function getOrderDetailsHTML(order) {
+    let productsHTML = [];
+
+    order.products.forEach(productItem => {
+        const product = getProduct(productItem.productId);
+        const singleProductHTML = `
             <div class="product-image-container">
-              <img src="images/products/intermediate-composite-basketball.jpg">
+                <img src="${product.image}">
             </div>
 
             <div class="product-details">
-              <div class="product-name">
-                Intermediate Size Basketball
-              </div>
-              <div class="product-delivery-date">
-                Arriving on: June 17
-              </div>
-              <div class="product-quantity">
-                Quantity: 2
-              </div>
-              <button class="buy-again-button button-primary">
+                <div class="product-name">
+                ${product.name}
+                </div>
+                <div class="product-delivery-date">
+                Arriving on: ${formatDate(productItem.estimatedDeliveryTime)}
+                </div>
+                <div class="product-quantity">
+                Quantity: ${productItem.quantity}
+                </div>
+                <button class="buy-again-button button-primary js-buy-again-button">
                 <img class="buy-again-icon" src="images/icons/buy-again.png">
                 <span class="buy-again-message">Buy it again</span>
-              </button>
+                </button>
             </div>
 
             <div class="product-actions">
-              <a href="tracking.html">
+                <a href="tracking.html">
                 <button class="track-package-button button-secondary">
-                  Track package
+                    Track package
                 </button>
-              </a>
+                </a>
             </div>
-          </div>
-        </div>
-        `
-        html.push(orderContainerHTML);
-    })
-    html = html.join('');
-    document.querySelector('.js-orders-grid').innerHTML = html;
+        `;
+        productsHTML.push(singleProductHTML);
+    });
+    productsHTML = productsHTML.join('');
+    return productsHTML;
 }
