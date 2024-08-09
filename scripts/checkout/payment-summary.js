@@ -69,7 +69,7 @@ export default function renderPaymentSummary() {
                     }),
                 }
             );
-            
+            if (!response.ok) throw 'There is a problem 324.';
             addOrder( await response.json());
             cart.clear();
             window.location.href = 'orders.html';
