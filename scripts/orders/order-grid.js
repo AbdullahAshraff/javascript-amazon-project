@@ -1,6 +1,8 @@
 import { orders } from '../../data/orders.js';
 import { getProduct } from '../../data/products.js';
 import { formatDate } from '../utils/dates.js';
+import cart from '../../data/cart.js';
+import { renderHeaderHTML } from '../amazon-header.js';
 
 export function renderOrderGridHTML() {
     let html = [];
@@ -36,6 +38,15 @@ export function renderOrderGridHTML() {
     });
     html = html.join('');
     document.querySelector('.js-orders-grid').innerHTML = html;
+
+    document.querySelectorAll('.js-buy-again-button').forEach(button => {
+        button.addEventListener('click', () => {
+            const { productId } = button.dataset;
+            cart.addToCart(productId);
+            renderHeaderHTML();
+            showAdded(button);
+        });
+    });
 }
 
 function getOrderDetailsHTML(order) {
@@ -58,9 +69,12 @@ function getOrderDetailsHTML(order) {
                 <div class="product-quantity">
                 Quantity: ${productItem.quantity}
                 </div>
-                <button class="buy-again-button button-primary js-buy-again-button">
+                <button class="buy-again-button button-primary js-buy-again-button" data-product-id="${
+                    product.id
+                }">
                 <img class="buy-again-icon" src="images/icons/buy-again.png">
                 <span class="buy-again-message">Buy it again</span>
+                <span class="buy-again-success"> ✓ Added </span>
                 </button>
             </div>
 
@@ -76,4 +90,15 @@ function getOrderDetailsHTML(order) {
     });
     productsHTML = productsHTML.join('');
     return productsHTML;
+}
+
+function showAdded(button) {
+  button.classList.add('show-added');
+
+    // retrieve last timeout id from the html dataset
+    let lastTimeoutId = parseInt(button.dataset.lastTimeoutId);
+    if (lastTimeoutId) clearTimeout(lastTimeoutId);
+    button.dataset.lastTimeoutId = setTimeout(() => {
+      button.classList.remove('show-added');
+    }, 2000);
 }

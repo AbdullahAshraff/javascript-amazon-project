@@ -218,3 +218,14 @@
     padding: 12px;
   }
 }
+
+.show-added .buy-again-message,
+.show-added .buy-again-icon,
+.buy-again-success{
+  display:none;
+}
+.show-added .buy-again-success,
+.buy-again-message,
+.buy-again-icon{
+  display:inline;
+}
