@@ -36,3 +36,11 @@ export function formatDate(date){
 export function formatDateWithDay(date){
     return dayjs(date).format('dddd, MMMM D');
 }
+
+export function getDeliveryProgress(orderTime, deliveryTime){
+    const currentTime = dayjs();
+    orderTime = dayjs(orderTime);
+    deliveryTime = dayjs(deliveryTime);
+
+    return ((currentTime - orderTime) / (deliveryTime - orderTime))*100;
+}

@@ -16,6 +16,11 @@ class Order{
     getPrice() {
         return `$${formatCurrency(this.totalCostCents)}`;
     }
+    getProduct(productId){
+        return this.products.find(
+            productItem => productItem.productId === productId
+        );
+    }
 }
 
 export function addOrder(orderDetails){
